@@ -1,24 +1,45 @@
-import logo from './logo.svg';
+
+import {useState} from 'react'
+import axios from 'axios';
+import {BrowserRouter, Route,Switch} from 'react-router-dom'
+import HomePage from './Pages/HomePage'
+import ArticlePage from './Pages/ArticlePage'
+import SearchPage from './Pages/SearchPage'
+import Splash from './Pages/Splash'
 import './App.css';
 
 function App() {
+  const [news,setNews]=useState({
+    title:"",
+    description:"",
+    author:"",
+    image:""
+  })
+      
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+ 
+      <BrowserRouter >
+
+        <Switch>
+          <Route path="/" component={Splash} exact/> 
+          <Route 
+             path="/home"
+             render={()=><HomePage setNews={setNews}
+                                   news={news} />}
+             />
+
+          <Route path="/search" 
+                 render={()=><SearchPage setNews={setNews} />}
+                 />
+                 
+          <Route path="/article" 
+                 render={()=><ArticlePage news={news}
+                 />}  
+          />  
+       </Switch>
+    
+    </BrowserRouter>
+     
   );
 }
 
